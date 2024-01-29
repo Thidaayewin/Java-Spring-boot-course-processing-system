@@ -1,0 +1,33 @@
+.scrollable-table {
+    overflow-x: auto;
+  }
+
+  .custom-copy-btn {
+  background-color: red;
+  color: white;
+}
+
+.custom-csv-btn {
+  background-color: blue;
+  color: white;
+}
+
+.custom-excel-btn {
+  background-color: green;
+  color: white;
+}
+
+.custom-pdf-btn {
+  background-color: orange;
+  color: white;
+}
+
+.custom-print-btn {
+  background-color: purple;
+  color: white;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+}

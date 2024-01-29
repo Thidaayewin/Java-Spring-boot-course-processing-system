@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Module </title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      />
+      <link rel="stylesheet" href="/css/admin_cohort.css">
+</head>
+
+<body class="bg-light tracking-wider leading-normal">
+    <section th:replace="~{admin-nav-fragment :: navbar}"></section>
+    <section class="bg-light">
+      <div class="container text-info mt-3">
+        <h1>Manage Cohort</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-light">
+            <li class="breadcrumb-item"><a href="/admin/student/list">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/course/list">Courses</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Cohort</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <div class="p-3 container bg-white rounded">
+      <!-- Create Button -->
+      <div class="d-flex justify-content-end">
+        <a href="#" class="btn btn-info mb-3" aria-pressed="false" autocomplete="off" data-toggle="modal" data-target="#createModal">
+          <i class="fas fa-plus"></i> 
+          Create Cohort
+        </a>
+      </div>
+
+      <!-- table -->
+      <section class="bg-white">
+        <div class="container-fluid">
+          <h4 class="mb-3">Cohort List</h4>
+
+          <div class="scrollable-table">
+            <table id="cohortDataTable" th:if="${not #lists.isEmpty(cohorts)}" class="table table-white table-sm table-hover table-bordered rounded" style="width:100%">
+                <thead class="thead-light text-white">
+                  <tr class="text-md-center">
+                    <th>Course Name</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Capacity</th>
+                    <th>Class Day</th>
+                    <th>Class Slot</th>
+                    <th>Cohort Start</th>
+                    <th>Lecturer</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Your table rows here -->
+                  <tr th:each="cohort : ${cohorts}">
+                    <td th:text="${cohort.courseName}"></td>
+                    <td th:text="${cohort.name}"></td>
+                    <td th:text="${cohort.description}"></td>
+                    <td th:text="${cohort.capacity}"></td>
+                    <td th:text="${cohort.classDay}"></td>
+                    <td th:text="${cohort.classSlot}"></td>
+                    <td th:text="${cohort.cohort_start}"></td>
+                    <td th:text="${cohort.lecturerName}"></td>
+                    <td>
+                      <a class="btn btn-info" data-toggle="modal" data-target="#editModal"
+                        th:data-cohortid="${cohort.cohortId}" th:data-courseid="${cohort.courseId}"
+                        th:data-coursename="${cohort.courseName}" th:data-name="${cohort.name}"
+                        th:data-description="${cohort.description}" th:data-capacity="${cohort.capacity}"
+                        th:data-classday="${cohort.classDay}" th:data-classslot="${cohort.classSlot}"
+                        th:data-cohort_start="${cohort.cohort_start}" th:data-lecturer="${cohort.lecturer}">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <a class="btn btn-warning" data-toggle="modal" data-target="#deleteModal"
+                        th:data-cohortid="${cohort.cohortId}">
+                        <i class="fas fa-trash-alt"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    
+<!-- Button to trigger the modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+    Open Modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Cohort</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm">
+                <input type="hidden" id="editCohortId" />
+                <input type="hidden" id="editCourseId" />
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="editCourseName">Course Name</label>
+                            <input type="text" class="form-control" id="editCourseName"
+                                placeholder="Course Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="editName">Name</label>
+                            <input type="text" class="form-control" id="editName" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="editDescription">Description</label>
+                            <input type="text" class="form-control" id="editDescription" placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="editCapacity">Capacity</label>
+                            <input type="number" class="form-control" id="editCapacity" placeholder="Capacity">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="editClassDay">Class Day</label>
+                            <select class="form-control" id="editClassDay" name="classDay">
+                                <option th:each="day : ${classDays}"
+                                        th:value="${day}"
+                                        th:text="${day}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editClassSlot">Class Slot</label>
+                            <!-- <input type="text" class="form-control" id="editClassSlot" placeholder="Class Slot"> -->
+                            <select class="form-control" id="editClassSlot" name="classSlot">
+                                <option th:each="slot : ${classSlots}"
+                                        th:value="${slot}"
+                                        th:text="${slot}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="editCohort_start">Cohort Start</label>
+                            <input type="datetime-local" class="form-control" id="editCohort_start"
+                                placeholder="Cohort Start" th:format="'yyyy-MM-dd'">
+                        </div>
+                        <div class="form-group">
+                          <label for="editLecturer">Lecturer</label>
+                          <select class="form-control" id="editLecturer" name="lecturer">
+                              <option th:each="lecturer : ${lecturers}"
+                                      th:value="${lecturer.id}"
+                                      th:text="${lecturer.firstName} + ${lecturer.lastName}"></option>
+                          </select>
+                      </div>
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" id="updateButton" class="btn btn-info">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Create Cohort</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your form fields for creating a new cohort -->
+                <form id="editForm">
+                        <input type="hidden" id="createCourseId" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editCourseName">Course Name</label>
+                                    <input type="text" class="form-control" id="createCourseName"
+                                        placeholder="Course Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editName">Name</label>
+                                    <input type="text" class="form-control" id="createName" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editDescription">Description</label>
+                                    <input type="text" class="form-control" id="createDescription" placeholder="Description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editCapacity">Capacity</label>
+                                    <input type="number" class="form-control" id="createCapacity" placeholder="Capacity">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editClassDay">Class Day</label>
+                                    <select class="form-control" id="createClassDay" name="classDay">
+                                        <option th:each="day : ${classDays}"
+                                                th:value="${day}"
+                                                th:text="${day}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editClassSlot">Class Slot</label>
+                                    <!-- <input type="text" class="form-control" id="editClassSlot" placeholder="Class Slot"> -->
+                                    <select class="form-control" id="createClassSlot" name="classSlot">
+                                        <option th:each="slot : ${classSlots}"
+                                                th:value="${slot}"
+                                                th:text="${slot}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editCohort_start">Cohort Start</label>
+                                    <input type="datetime-local" class="form-control" id="createCohort_start"
+                                        placeholder="Cohort Start" th:format="'yyyy-MM-dd'">
+                                </div>
+                                <div class="form-group">
+                                  <label for="editLecturer">Lecturer</label>
+                                  <select class="form-control" id="createLecturer" name="lecturer">
+                                      <option th:each="lecturer : ${lecturers}"
+                                              th:value="${lecturer.id}"
+                                              th:text="${lecturer.firstName} + ${lecturer.lastName}"></option>
+                                  </select>
+                              </div>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" id="createButton" class="btn btn-info">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Add/Edit Modal -->
+    <!-- <div class="modal fade modal-lg" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header"> -->
+                    <!-- <div
+                    class="modal fade modal-lg"
+                    id="editModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="editModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Cohort</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <!-- Your form fields for editing cohort details -->
+                    <!-- <form id="editForm">
+                        <input type="hidden" id="editCohortId" />
+                        <input type="hidden" id="editCourseId" />
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editCourseName">Course Name</label>
+                                    <input type="text" class="form-control" id="editCourseName"
+                                        placeholder="Course Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editName">Name</label>
+                                    <input type="text" class="form-control" id="editName" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editDescription">Description</label>
+                                    <input type="text" class="form-control" id="editDescription" placeholder="Description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editCapacity">Capacity</label>
+                                    <input type="number" class="form-control" id="editCapacity" placeholder="Capacity">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editClassDay">Class Day</label>
+                                    <select class="form-control" id="editClassDay" name="classDay">
+                                        <option th:each="day : ${classDays}"
+                                                th:value="${day}"
+                                                th:text="${day}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editClassSlot">Class Slot</label>
+                                    <!-- <input type="text" class="form-control" id="editClassSlot" placeholder="Class Slot"> -->
+                                    <!-- <select class="form-control" id="editClassSlot" name="classSlot">
+                                        <option th:each="slot : ${classSlots}"
+                                                th:value="${slot}"
+                                                th:text="${slot}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editCohort_start">Cohort Start</label>
+                                    <input type="datetime-local" class="form-control" id="editCohort_start"
+                                        placeholder="Cohort Start" th:format="'yyyy-MM-dd'">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="updateButton" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Delete Modal
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            
+            <h5 class="modal-title" id="deleteModalLabel">Delete Course</h5>
+            <div class="form-group">
+                        <input type="hidden" class="form-control" id="cohortIdDelete" readonly />
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this course?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                    <button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+         <!-- Delete Modal -->
+    <div
+    class="modal fade"
+    id="deleteModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="deleteModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <h5 class="modal-title" id="deleteModalLabel">Delete Cohort</h5>
+          <div class="form-group">
+            <input
+              type="hidden"
+              class="form-control"
+              id="cohortIdDelete"
+              readonly
+            />
+          </div>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this cohort?</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="/js/admin_cohort.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- Your custom JavaScript code -->
+        <!-- <script src="/admin_cohort.js"></script> -->
+        <!-- <script>
+    $(document).ready(function() {
+      $('#example').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+      });
+    });
+  </script> -->
+</body>
+
+</html>

@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>CAPS</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Course Application Processing System</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+              <img src="images/T3logo_only.png" alt=""  height="40" class="d-inline-block align-text-center">
+              Course Application Processing System
+            </a>
+          </div>
+
+    </nav>
+
+    <!-- login part -->
+    <section class="p-5 bg-white test-center">
+        <div class="container">
+            <div class="row">
+                <!-- left side -->
+                <div class="col-md-6 mt-3 d-flex justify-content-center align-items-start">
+                    <div class="d-flex">
+                        <form method="post" th:action="@{/login}">
+                            <h1><span class="text-info">Login</span></h1>
+                            <div class="mb-3 mt-5">
+                                <label for="username" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+                            <button type="submit" class="btn btn-info">Login</button>
+                            <div th:if="${param.error}" class="alert alert-danger">
+                                Invalid username and password.
+                            </div>
+                            <div th:if="${param.logout}" class="alert alert-success">
+                                You have been logged out.
+                            </div>
+                            <div th:if="${param.expired}" class="alert alert-success">
+                                Your session has expired.
+                            </div>
+                            <div th:if="${param.created}" class="alert alert-success">
+                                Your account has been created
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- right side -->
+                <div class="col-md-6">
+                    <img src="images/home.png" alt="showcase" class="img-fluid d-none d-md-block mx-4">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- lesson part -->
+    <section class="p-5 bg-light">
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-4 mt-3">
+                    <div class="card bg-dark">
+                        <div class="card-body  text-center">
+                            <div class="card-title text-light">
+                                Object-Oriented Programming
+                            </div>  
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary mt-2" data-toggle="modal" data-target="#LessonDetails1">
+                                Show Details
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="LessonDetails1" tabindex="-1" role="dialog" aria-labelledby="LessonDetails1Label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="LessonDetails1Label">Object-Oriented Programming</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Course Code: 1234433
+                                    <br>
+                                    <br> Course Description: 
+                                    <br> This course introduces the principles and practices of Object-Oriented Programming (OOP), covering concepts such as encapsulation, inheritance, and polymorphism, to develop robust and modular software applications.
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <div class="card bg-info">
+                        <div class="card-body text-center">
+                            <div class="card-title text-light">
+                                Kotlin Mobile Development
+                            </div>  
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary mt-2" data-toggle="modal" data-target="#LessonDetails2">
+                                Show Details
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="LessonDetails2" tabindex="-1" role="dialog" aria-labelledby="LessonDetails2Label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="LessonDetails2Label">Kotlin Mobile Development</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Course Code: 17863
+                                    <br>
+                                    <br> Course Description: 
+                                    <br> Explore the fundamentals of Kotlin programming language and its application in mobile development, equipping you with the skills to create robust and efficient Android apps. Prerequisite: Basic programming knowledge.
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <div class="card bg-dark">
+                        <div class="card-body text-center">
+                            <div class="card-title text-light">
+                                Java Spring
+                            </div>  
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary mt-2" data-toggle="modal" data-target="#LessonDetails4">
+                                Show Details
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="LessonDetails4" tabindex="-1" role="dialog" aria-labelledby="LessonDetails4Label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="LessonDetails4Label">Java Spring</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Course Code: 17863
+                                    <br>
+                                    <br> Course Description: 
+                                    <br> This course introduces Java Spring framework, covering key concepts and practical implementations of dependency injection, MVC architecture, and database integration.
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <div class="card bg-dark">
+                        <div class="card-body text-center">
+                            <div class="card-title text-light">
+                                C Sharp
+                            </div>  
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary mt-2" data-toggle="modal" data-target="#LessonDetails5">
+                                Show Details
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="LessonDetails5" tabindex="-1" role="dialog" aria-labelledby="LessonDetails5Label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="LessonDetails5Label">C Sharp</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Course Code: 17863
+                                    <br>
+                                    <br> Course Description: 
+                                    <br> Learn the fundamentals of C# programming language and develop your skills in creating robust and efficient applications for various platforms.
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <div class="card bg-info">
+                        <div class="card-body  text-center">
+                            <div class="card-title text-light">
+                                SQL Database Crash Course
+                            </div>  
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary mt-2" data-toggle="modal" data-target="#LessonDetails3">
+                                Show Details
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="LessonDetails3" tabindex="-1" role="dialog" aria-labelledby="LessonDetails3Label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="LessonDetails3Label">SQL Database Crash Course</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Course Code: 77834
+                                    <br>
+                                    <br> Course Description: 
+                                    <br> Learn the fundamentals of SQL, including querying, data manipulation, and database design, in a condensed and practical format. Ideal for beginners and those seeking a quick SQL refresher.
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- marketing part -->
+    <section class="p-5">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md">
+                    <img src="images/news1.png" alt="1" class="img-fluid">
+                </div>
+                <div class="col-md-8 p-5">
+                    <h2>Course Enrollment Guide</h2>
+                    <p class="lead">
+                        Welcome to the Student Course Enrollment Guide! This guide is designed to assist you in navigating the process of enrolling in courses at your educational institution. Whether you are a new student or a returning one, following these steps will help you choose and register for the courses that align with your academic goals. Let's get started!
+                    </p>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target=".bd-example-modal-lg">
+                        See More
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Student Course Enrollment Guide</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                Welcome to the Student Course Enrollment Guide! This guide is designed to assist you in navigating the process of enrolling in courses at your educational institution. Whether you are a new student or a returning one, following these steps will help you choose and register for the courses that align with your academic goals. Let's get started!
+                                <br>
+                                <br>Step 1: Review Academic Requirements and Policies
+                                Before you begin selecting your courses, it's crucial to familiarize yourself with the academic requirements and policies of your institution. Review the course catalog, student handbook, or academic website to understand the core curriculum, major/minor requirements, credit system, prerequisites, and any other relevant regulations.
+                                <br>
+                                <br>Step 2: Meet with an Academic Advisor
+                                Schedule a meeting with your academic advisor to discuss your academic goals, career aspirations, and course selection. Your advisor will provide guidance, suggest suitable courses, and ensure that you're on track for graduation. Take this opportunity to ask questions and seek clarification on any concerns you may have.
+                                <br>
+                                <br>Step 3: Explore Course Options
+                                Research and explore the available courses for the upcoming semester. Pay attention to the course descriptions, prerequisites, credits, and scheduling information. Consider your major requirements, personal interests, and any prerequisite courses you need to complete. Make a list of potential courses that align with your goals.
+                                <br>
+                                <br>Step 4: Create a Tentative Schedule
+                                Using the course schedule or timetable provided by your institution, create a tentative schedule that includes the courses you're interested in. Take note of the days, times, and locations of each class. Ensure that there are no time conflicts or overlapping classes.
+                                <br>
+                                <br>Step 5: Check for Course Availability
+                                Once you have your tentative schedule, check if the courses you selected have available seats. Some institutions provide online portals or registration systems where you can check the course availability in real-time. Be prepared with alternative courses in case your first choices are full.
+                                <br>
+                                <br>Step 6: Prioritize and Finalize Course Selection
+                                Based on course availability and your academic goals, prioritize your course selections. Start by enrolling in courses that are essential for your major or have limited seating. Then, proceed to add elective courses or those that align with your interests. Be mindful of credit limits and workload.
+                                <br>
+                                <br>Step 7: Register for Courses
+                                Using your institution's registration system, officially enroll in your chosen courses. Follow the instructions provided, and ensure that you meet any registration deadlines. Some institutions have a specific registration period for each class, so plan accordingly and register as soon as possible to secure your seat.
+                                <br>
+                                <br>Step 8: Review and Confirm Your Schedule
+                                After registering for your courses, review your final schedule to ensure accuracy. Double-check the dates, times, and locations of your classes. Make any necessary adjustments before the add/drop deadline if needed.
+                                <br>
+                                <br>Step 9: Attend Classes and Seek Support
+                                Congratulations on successfully enrolling in your courses! Attend all your classes from the beginning and be proactive in your studies. If you encounter any difficulties or have questions, don't hesitate to reach out to your professors, teaching assistants, or support services provided by your institution.
+                                <br>
+                                <br>Remember, course enrollment is an ongoing process. Stay informed about important academic dates, be open to exploring new subjects, and periodically reassess your academic goals. Good luck with your studies!
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-5 bg-dark text-light">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md-8">
+                    <h2>Important Notes</h2>
+                    <p class="lead">
+                        Course Registration From 27 Jun 9am to 28 Jun 5pm. You will be notified via email and CAPS when your module allocation outcome is posted at CAPS > "View My Classes”. Course and Timetable Information at “View all Course”.
+                        <br>Resumption of Face-to-Face (F2F) classes In alignment with the national stance to return to normalcy as a COVID-19 resilient nation, the University intends to resume face-to-face (F2F) classes for all courses whenever possible and appropriate, to the extent allowed by prevailing Safe Management Measures.
+                    </p>
+                </div>
+                <div class="col-md">
+                    <img src="images/news2.png" alt="1" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- popular lecturer -->
+    <section class="p-5 bg-light">
+        <div class="container">
+            <h1 class="text-center text-secondary">Lecturers</h1>
+            <div class="row mt-3">
+                <div class="col-md-6 mt-3 col-lg-3">
+                    <div class="card" style="background-color: #dee2e6;" h-50>
+                        <div class="card-body text-center">
+                            <img src="images/people1.jpg" class="mb-3 rounded-circle img-fluid">
+                            <h3 class="card-title">Dr. Daniel Rodriguez</h3>
+                            <p class="card-text">With a Ph.D. in Computer Science and years of industry experience, Dr. Rodriguez specializes in machine learning and data analysis, bringing real-world insights to his lectures.</p>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3 col-lg-3">
+                    <div class="card" style="background-color: #dee2e6;" h-50>
+                        <div class="card-body text-center">
+                            <img src="images/people2.jpg" class="mb-3 rounded-circle img-fluid">
+                            <h3 class="card-title">Prof. Michael Johnson</h3>
+                            <p class="card-text">Prof. Johnson is a renowned expert in software engineering and cybersecurity. His engaging teaching style and practical approach make complex concepts accessible to students.</p>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3 col-lg-3">
+                    <div class="card" style="background-color: #dee2e6;" h-50 >
+                        <div class="card-body text-center">
+                            <img src="images/people3.jpeg" class="mb-3 rounded-circle img-fluid">
+                            <h3 class="card-title">Dr. Sarah Chen</h3>
+                            <p class="card-text">Dr. Chen's expertise lies in computer graphics and visualization. Her innovative teaching methods and passion for design inspire students to create visually stunning applications and simulations.</p>
+                            <br>
+                            <br>                       
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3 col-lg-3">
+                    <div class="card" style="background-color: #dee2e6;" h-50>
+                        <div class="card-body text-center">
+                            <img src="images/people4.jpg" class="mb-3 rounded-circle img-fluid">
+                            <h3 class="card-title">Prof. David Thompson</h3>
+                            <p class="card-text">Prof. Thompson is an authority in field of algorithms and data structures. His systematic teaching approach equips students with the problem-solving skills crucial for software development.</p>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- contact us -->
+    <section class="p-1">
+        <div class="container">
+            <h2 class="text-center mb-4">Contact Us</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Tel: +65 6516 8000</li>
+                <li class="list-group-item">Email: studentservice@u.edu.sg</li>
+              </ul>
+        </div>
+    </section>
+
+    <footer class="p-1 bg-dark text-white text-center">
+        <div class="container">
+            <p class="lead text-center">Copyright &copy; Team 3</p>
+        </div>
+    </footer>
+
+
+<!-- edit above here -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+

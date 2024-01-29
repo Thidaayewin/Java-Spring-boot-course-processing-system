@@ -1,0 +1,12 @@
+.relative-box {
+    position: relative;
+  }
+  .relative-box .form-control {
+    padding-right: 30px;
+  }
+  .relative-box .suffix {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }

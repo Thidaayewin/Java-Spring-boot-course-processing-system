@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <section th:fragment="navbar">
+      <nav class="navbar navbar-expand-md navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand">
+          <img src="/images/T3logo_only.png" alt="" height="40" class="d-inline-block align-text-center">
+          <span class="text-secondary"> Lecturer Portal  </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+            
+        <div class="collapse navbar-collapse" id="navmenu">
+          <ul class="navbar-nav ml-auto">   
+            <li class="nav-item"><div class="nav-link"><a href="/lecturer" style="color:gray;">View Courses Taught</a></div></li>
+            <li class="nav-item"><div class="nav-link"><a href="/student/list/0/0" style="color:gray;">View Student List</a></div></li>
+
+            <!-- <li class="nav-item"><div class="nav-link"><a href="/admin/course/list" style="color:gray;">Courses</a></div></li> -->
+            <!-- <li class="nav-item"><div class="nav-link"><a href="/admin/enrollment/list" style="color:gray;">Enrollment</a></div></li> -->
+            <li class="nav-item"><div class="nav-link"><a href="/logout" style="color:gray;">Logout</a></div></li>
+          </ul>
+        </div>
+      </nav>
+    </section>
+</body>
+
+</html>
+
+

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>DataTables </title>
+	<style>
+    .hidden {
+      display: none;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="/css/lecturer.css">
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</head>
+
+<body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
+  <section th:replace="~{lecturer-nav-fragment :: navbar}"></section> 
+    <div class="container-fluid">
+    <!--header and dropdown-->
+    <h3>Student List</h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-light">
+        <li class="breadcrumb-item"><a href="/lecturer">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Student List</li>
+      </ol>
+    </nav>
+    <div class="row mb-3">
+      <div class="col-sm-4 col-md-3"> 
+        <!--Course drop-->
+          <div class="dropdown">
+            <select class="form-select" id="courseDropdown">
+              <option value="">Select Course</option>
+              <option th:each="course : ${courses}" th:value="${course.id}" th:text="${courseIdNameMap[course.id]}" th:selected="${course.id==[courseId]}"></option>
+            </select>
+          </div>       
+        <!--drop-->
+      </div>
+      
+      <div class="col-sm-3 col-md-2"> 
+          <!--Cohort drop-->
+    
+          <div class="dropdown">
+            <select class="form-select" id="cohortDropdown"> <!--*th:include="cohortDropdown :: cohortOptions"</select>--->
+              <option value="">Select Cohort</option>
+              <option th:each="cohort:${courseCohorts}" th:value="${cohort.id}" th:text="${cohortIdNameMap[cohort.id]}" th:selected="${cohort.id==[cohortId]}"></option>
+            </select>
+          </div>
+          <!--2nd drop-->
+        </div>  
+
+      <div class="col-6 col-md-2">
+        <!---filterbutton-->
+        <button class="btn btn-primary"  id="filterButton">Filter</button>
+        <!--filter-->
+      </div>
+      
+      <div class="col-6 col-md-5 d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary" onclick="goBack()">Back to Courses</button>
+      </div>
+      
+    </div>
+  <!--table-->
+  <div class="scrollable-table">
+    <table id="StudentsDataTable" class="table table-white table-sm table-hover table-bordered rounded display nowrap" style="width: 100%" th:if="${not #lists.isEmpty(studentGrades)}">
+      <thead class="thead-light text-white">
+  <!-- <table id="StudentsDataTable" class="table table-striped" style="width: 100%" th:if="${not #lists.isEmpty(studentGrades)}">
+    <thead> -->
+    <tr>
+      <th class="hidden">Cohort Id</th>
+      <th>Cohort Name</th>
+      <th>Matric No.</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Score</th>
+      <th>Action</th>
+      <th>Performance</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Your table rows here -->
+    <tr  th:each="student : ${students}">
+      <td id="cohortId" th:text="${cohortId}" class="hidden"></td>
+      <td id="cohortName" th:text="${cohortIdNameMap[__${#strings.escapeJavaScript(cohortId)}__]}"></td>
+      <td th:text="${student.userNumber}"></td>
+      <td th:text="${student.firstName}"></td>
+      <td th:text="${student.lastName}"></td>
+      <td th:text="${student.email}"></td>
+      <td>
+        <span th:if ="${studentGrades[student.id+'-'+cohortId]==-1}">-</span>
+        <span th:if ="${studentGrades[student.id+'-'+cohortId]!=-1}" th:text="${studentGrades[student.id+'-'+cohortId]}"></span>
+      </td>
+     
+     <td>
+    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal" th:data-studentid="${student.id}" th:data-cohortid="${cohortId}">
+      Edit  <i class="fas fa-edit"></i>
+    </button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Input Score</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+             <!--modal body-->
+        <form>
+          <input type="hidden" class="form-control" id="studentIdUpdate" readonly />
+          <input type="hidden" class="form-control" id="cohortIdUpdate" readonly />
+          <label for="subject name" class="form label">Score</label>
+          <input type="text"  class="form-control" aria-label="Text input with dropdown button"  id = "scoreId"/>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="updateButton">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--</form>-->
+ <!--modal-->   
+         </td>
+         <!--id should be the student cohort-->
+          <td id="viewButton"><a th:href="@{/student/viewPerformance/{id}/{cohortId}(id=${student.id},cohortId=${cohortId})}">View  <i class="fas fa-eye"></i></a></td>
+      </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<script src="/js/studentsInfo.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+</body>
+</html>

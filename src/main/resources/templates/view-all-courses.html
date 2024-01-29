@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Eligible Courses</title>
+    <!-- Include Bootstrap CSS -->
+  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/view_all_courses.css">
+</head>
+
+<body class="bg-light tracking-wider leading-normal">
+    <section th:replace="~{student-nav-fragment:: navbar}"></section>
+    <section class="bg-light">
+      <div class="container text-info mt-3">
+        <h1>All Eligible Courses</h1>
+        <!-- <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-light">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">View All Courses</li>
+          </ol>
+        </nav> -->
+      </div>
+    </section>
+    <div class="p-3 container bg-white rounded">
+
+    <!-- table -->
+    <section class="bg-white">
+        <!-- <div class="container-fluid">
+          <!-- <h4 class="mb-3">All Eligible Courses</h4> -->
+          <!-- <table id="courseDataTable" class="table table-white table-sm table-hover table-bordered rounded" style="width:100%">
+            <thead class="thead-light text-white"> --> 
+              <div class="scrollable-table">
+                <table id="courseDataTable" th:if="${not #lists.isEmpty(allCourses)}" class="table table-white table-sm table-hover table-bordered rounded" style="width:100%">
+                    <thead class="thead-light text-white">
+            <tr class="text-md-center">
+              <th>Course Id</th>
+              <th>Course Name</th>
+              <th>Credits</th>
+              <th>View Active Cohorts</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Your table rows here -->
+            <tr th:each="course : ${allCourses}">
+              <td th:text="${course.id}"></td>
+              <td th:text="${course.name}"></td>
+              <td th:text="${course.credits}"></td>
+              <td>
+                <a th:href="@{/student/view-cohorts(courseId=${course.id})}" id = "viewCohorts" class="btn btn-info">Select</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+<!-- <body>
+    <div th:include="student-nav-fragment.html"></div>
+
+    <div class="container">
+        <h2>All Available Courses</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>All Available Courses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="course : ${allCourses}">
+                    <td th:text="${course.name}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body> -->
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="/js/view_all_courses.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>
+</html>
